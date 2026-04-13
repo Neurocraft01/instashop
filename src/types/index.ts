@@ -10,7 +10,7 @@ import {
   PaymentMethod,
   PaymentStatus,
   DiscountType,
-} from "@/generated/prisma";
+} from "@prisma/client";
 
 export type {
   Role,

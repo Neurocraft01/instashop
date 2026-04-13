@@ -15,7 +15,7 @@ import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend,
 } from "recharts";
-import { OrderStatus, PlanType, PaymentMethod } from "@/generated/prisma";
+import { OrderStatus, PlanType, PaymentMethod } from "@prisma/client";
 import { PLAN_LIMITS } from "@/types";
 import { format } from "date-fns";
 
