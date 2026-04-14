@@ -1,139 +1,139 @@
-export default function Page() {
+import Link from "next/link";
+import { db } from "@/lib/db";
+import { notFound } from "next/navigation";
+import { StoreShell } from "@/components/store/StoreShell";
+import type { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const store = await db.store.findUnique({ where: { slug }, select: { name: true } });
+  return { title: `About ${store?.name ?? slug} — InstaShop` };
+}
+
+const VC = {
+  primary: "#745700", primaryContainer: "#f9cc61",
+  onPrimaryFixed: "#443100", onPrimaryContainer: "#5b4400",
+  secondary: "#b31446", secondaryContainer: "#ffc2c9",
+  onSecondaryContainer: "#920035",
+  surfaceLowest: "#ffffff", surfaceLow: "#f3f0ed",
+  onBackground: "#2f2f2d", onSurfaceVariant: "#5c5b59",
+  brandDark: "#2B1B3D", brandYellow: "#FFD166",
+};
+
+export default async function StoreAboutPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+
+  const store = await db.store.findUnique({
+    where: { slug },
+    select: {
+      name: true, tagline: true, description: true,
+      logoUrl: true, whatsappNumber: true,
+      instagramHandle: true, facebookUrl: true, youtubeUrl: true,
+      _count: { select: { products: { where: { status: "ACTIVE" } }, orders: true } },
+    },
+  });
+
+  if (!store) notFound();
+
+  const whatsappBase = store.whatsappNumber?.replace(/\D/g, "");
+
   return (
-    <div className="vibrant-wrapper">
+    <StoreShell slug={slug} storeName={store.name} whatsappNumber={store.whatsappNumber} activeTab="about">
+      {/* Store Identity */}
+      <section className="py-10 flex flex-col items-center text-center">
+        <div className="w-28 h-28 rounded-full overflow-hidden border-4 mb-5 flex items-center justify-center"
+          style={{ borderColor: VC.primaryContainer, background: VC.primaryContainer }}>
+          {store.logoUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={store.logoUrl} alt={store.name} className="w-full h-full object-cover" />
+          ) : (
+            <span className="text-5xl font-black" style={{ color: VC.onPrimaryFixed }}>{store.name[0]}</span>
+          )}
+        </div>
+        <h1 className="text-3xl font-black mb-2" style={{ fontFamily: "Epilogue, sans-serif", color: VC.brandDark }}>
+          {store.name}
+        </h1>
+        {store.tagline && (
+          <p className="text-sm max-w-xs" style={{ color: VC.onSurfaceVariant }}>{store.tagline}</p>
+        )}
+      </section>
 
-{/*  Top Navigation  */}
-<header className="fixed top-0 w-full z-50 bg-white/70 glass-nav shadow-[0_8px_32px_rgba(255,209,102,0.15)]">
-<nav className="flex justify-between items-center px-8 py-4 w-full">
-<div className="text-2xl font-black text-[#2B1B3D] dark:text-white font-['Epilogue'] tracking-tight">
-                RadiantCreator
-            </div>
-<div className="hidden md:flex items-center space-x-8 font-['Epilogue']">
-<a className="text-[#FFD166] font-bold border-b-4 border-[#FFD166] pb-1" href="#">About</a>
-<a className="text-[#2B1B3D] hover:text-[#FFD166] transition-colors" href="#">Storefront</a>
-<a className="text-[#2B1B3D] hover:text-[#FFD166] transition-colors" href="#">Contact</a>
-</div>
-<div className="flex items-center space-x-6">
-<button className="material-symbols-outlined text-on-surface hover:scale-105 transition-transform duration-300" data-icon="shopping_bag">shopping_bag</button>
-<button className="bg-primary-container text-on-primary-fixed px-6 py-3 rounded-xl font-bold hover:scale-105 transition-transform duration-300 shadow-sm">
-                    Get Started
-                </button>
-</div>
-</nav>
-</header>
-<main className="pt-32 pb-20 max-w-7xl mx-auto px-6">
-{/*  Hero Section: Centered Identity  */}
-<section className="flex flex-col items-center text-center mb-24">
-<div className="relative mb-12">
-<div className="absolute inset-0 bg-primary-container rounded-full scale-110 blur-2xl opacity-20"></div>
-<img className="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover border-4 border-white shadow-xl relative z-10" data-alt="Close-up portrait of Sarah, a warm smiling baker with flour on her apron in a sunlit rustic kitchen studio" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhmgw14saDMA8z_m5fcVCbJN6VtrLCg5zmddUCHVr3bf-FOnFaA_2CFIgNPYzKD-s74_DIRVlZajTsNznsTNRcfWsJdI5HHsNBdQcUH1IBpb2NySjM7T9pek8eTQeTl-mBSB8_81ZC_ECGpyLFW0N96OjBfGs3O3RH6gftdrTQ2UM-bgADJw6fD_RrlzaE1bCqgFbJV_jopOSagNChYGdw-HSxCMsPwt9Qhyi4DzmWgvKnmYQeUbqxRfxXlWAqLXV6-oydjgKLqIEU"/>
-</div>
-<h1 className="font-headline text-5xl md:text-7xl font-black text-on-background tracking-tight mb-4">
-                Hi, I'm <span className="text-primary">Sarah</span>.
-            </h1>
-<p className="font-body text-xl md:text-2xl text-on-surface-variant max-w-2xl leading-relaxed">
-                A micro-bakery owner obsessed with wild yeast, golden crusts, and the slow art of sourdough.
-            </p>
-</section>
-{/*  Our Story: Asymmetric Layout  */}
-<section className="grid md:grid-cols-2 gap-16 items-center mb-32">
-<div className="order-2 md:order-1 relative">
-<div className="aspect-[4/5] rounded-xl overflow-hidden shadow-2xl">
-<img className="w-full h-full object-cover" data-alt="Detail of artisan bread cooling on a wire rack with steam rising in warm morning sunlight hitting a marble counter" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNWu3bQaXMPme7qNM4aFchJh5xxEuoW2fqPjuGEZfigdSCHEpDx4pmyHfIUB6a7Jz52FFHWbBOr1J4cV2kewIRK4o1nNwxfTkvtL4dGIQw1OpJE5aQ5c4xK8jO6HUKWLtZ_u7wtDdx-FyIiNuSwuCZBENT--N5H3zbfUsIuWZj456mfNQxE-cynn_qduHzsD_ZrLoaXnGx3T6PG24xUwWk34zHzRjZDnycdafB56s0UcqWfd-oj97EsMQ9ru-umZwIAy2Da-fWR0LI"/>
-</div>
-<div className="absolute -bottom-8 -right-8 w-1/2 aspect-square rounded-lg overflow-hidden border-8 border-surface shadow-xl hidden md:block">
-<img className="w-full h-full object-cover" data-alt="Top down view of hands kneading soft dough on a flour-dusted wooden surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOJ4dhIBlaBwPBXw8AcXXTVWyeEJpLv8LBtX-wua623BPhljCCzlLsWusNlCuxmyH-gkysWMYA8pt-aShjyi0WjFFJOxQAnAkGEVznXQYVWzdeo9CMR3q2ZRNO7XfEqlh5rpr4QoBYHoX1dIh3jfViv1TWrvQ2ZA0IaXP2eQNC5fxGSVINJeUNyPGcZg9SQOSZ0MdOaiDzMbGnMwz63ku6Vqft8SUpKwJNouKot2N117FqJSNuMu8zQUdJ6NXLIjZXrK3Z601baBrt"/>
-</div>
-</div>
-<div className="order-1 md:order-2 space-y-8">
-<span className="font-label text-sm uppercase tracking-widest text-secondary font-bold">The Heart of the Bakery</span>
-<h2 className="font-headline text-4xl md:text-5xl font-bold text-on-background leading-tight">Our Story began in a small kitchen with big dreams.</h2>
-<div className="space-y-6 text-lg text-on-surface-variant font-body leading-relaxed">
-<p>It started with a single starter named 'Goldie' and a quest for the perfect crumb. What began as a weekend hobby quickly turned into a neighborhood obsession.</p>
-<p>I believe that bread is more than just food; it's a connection to our roots and a testament to the beauty of patience. Every loaf at Radiant Editor Micro-Bakery is handcrafted over 36 hours using ancient grains and local ingredients.</p>
-</div>
-<div className="pt-4">
-<button className="bg-secondary text-on-secondary px-8 py-4 rounded-xl font-bold hover:scale-105 transition-transform duration-300 editorial-shadow">
-                        Explore the Shop
-                    </button>
-</div>
-</div>
-</section>
-{/*  The Process: 3-Step Bento Grid  */}
-<section className="bg-surface-container-low rounded-xl p-8 md:p-16 mb-32">
-<div className="text-center mb-16">
-<h2 className="font-headline text-4xl font-bold mb-4">The Process</h2>
-<p className="text-on-surface-variant">Three simple steps, forty-eight hours of magic.</p>
-</div>
-<div className="grid md:grid-cols-3 gap-8">
-{/*  Step 1  */}
-<div className="bg-surface-container-lowest p-10 rounded-lg editorial-shadow flex flex-col items-start space-y-6">
-<div className="w-16 h-16 bg-primary-container rounded-full flex items-center justify-center">
-<span className="material-symbols-outlined text-3xl text-on-primary-container" data-icon="water_drop">water_drop</span>
-</div>
-<h3 className="font-headline text-2xl font-bold">The Hydration</h3>
-<p className="text-on-surface-variant font-body">We start with a high-hydration blend of stone-milled flours, allowing the gluten to develop naturally and slowly.</p>
-</div>
-{/*  Step 2  */}
-<div className="bg-surface-container-lowest p-10 rounded-lg editorial-shadow flex flex-col items-start space-y-6">
-<div className="w-16 h-16 bg-primary-container rounded-full flex items-center justify-center">
-<span className="material-symbols-outlined text-3xl text-on-primary-container" data-icon="timer">timer</span>
-</div>
-<h3 className="font-headline text-2xl font-bold">Cold Fermentation</h3>
-<p className="text-on-surface-variant font-body">A long, cool rest in the fridge for 24 hours unlocks complex flavors and makes our bread incredibly easy to digest.</p>
-</div>
-{/*  Step 3  */}
-<div className="bg-surface-container-lowest p-10 rounded-lg editorial-shadow flex flex-col items-start space-y-6">
-<div className="w-16 h-16 bg-primary-container rounded-full flex items-center justify-center">
-<span className="material-symbols-outlined text-3xl text-on-primary-container" data-icon="local_fire_department">local_fire_department</span>
-</div>
-<h3 className="font-headline text-2xl font-bold">The Stone Bake</h3>
-<p className="text-on-surface-variant font-body">Fired at high heat on heavy stone, resulting in a blistered, caramelized crust and an airy, open interior crumb.</p>
-</div>
-</div>
-</section>
-{/*  Follow the Journey: Social Section  */}
-<section className="text-center mb-12">
-<h2 className="font-headline text-4xl font-bold mb-12">Follow the Journey</h2>
-<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-<div className="aspect-square rounded-lg overflow-hidden group">
-<img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Close up of a perfect sourdough loaf with decorative wheat stalk scoring patterns" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJvhDqVkGgm6GOsjcSLkKf2CTTuqAPL36LkHI6j6Z1dkiduV7R0svguoRF8x2ysEipQQZJJHxE-9b_C0kpUfAMuVk6iy0IxB2xN6wuAwGc5XZwpkt18UEBv9sfdJlAYRffbMIasFOkfrbKfk_5QuAnNUZxYfAC4fUQyjee-wp8LeZ-8mmBRKrrc94CLedLHEHn4-kOH0bOCbY23GWdi5FsJ0W_0Rujf3RA08hExRXwMg3AtJOHUbyGW72XTZDVFDQTGPF8w_jKKCvv"/>
-</div>
-<div className="aspect-square rounded-lg overflow-hidden group">
-<img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A rustic wooden basket filled with assorted pastries and golden croissants in soft morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZ6uDled1bjX3TGVou1BDdCAIEga9rgH5U8aSK3cIf7WKikKWTx8vUfrm3fZGgemIAOHGp8i1ROkOdys4UxRhWR5oqk7_LnI5-PwScx7lBiQ12IOrjibMx-naas8kipg_n56PauHs8uuOvyGY_BCY4SA2RZgSKzF5lA0cnx6RafL50PBj5BE6U_W9tZMSfq3AUB0tQgknff35BMEula1z63oJ1R7EAC8M_vBCJ5FRfZn7foorymfoQhHOqzeX1lHtxSfpKwQUI2ujU"/>
-</div>
-<div className="aspect-square rounded-lg overflow-hidden group">
-<img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Baker Sarah smiling while carrying a tray of freshly baked sourdough boules" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpg3pkesDCCcC5_pgiBnLjleNzUU4XkyFMDI1kylUPCKwA2n0tFxPOZhzE5vnKV2pP59ysN2pER8jUfjZ0qAPsIMpr2do6Z1jqh3dCXz2tGsWrs7UqTtOK5yRbRuf1L5PC3GJLMfDr-U2jqYfiYgqYAZglM4kfOa5Ak_-Euv_Q6FKbucPfRi4KZVWgxr4vD4igG2Uovidw2yl7vxFoerjMzpg1OJi_TVXWo0jBM5XjjEAuVKtbJ8ayETgeoelQI18-92Q06x5HSJ7A"/>
-</div>
-<div className="aspect-square rounded-lg overflow-hidden group">
-<img className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Macro shot of bread crumb showing large open air pockets and glistening texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC58AoWjzkEWy06UwOS-LufrUNHUsYQLDL0znO-0m5WarvYiYKumhd8AMXxshHc4EkWwgvbVGig1sbv8XmrvNoJvATQlGn9yjTSF7VI56ov2fKX0UuEcYOd3OOFQKOS3DAQOWoR4bCm0WtR0FwWJpFnXjpnSc71AWCd8nUxfflrruUpuub0f6rN2bvrvjkzUc59wW87sGtybA5FViTzX7zNJDN8GSbTlg97x14HvxHCBrxJTljQaeoXRS0FVf4SupEiS8IdOq80NPQA"/>
-</div>
-</div>
-<div className="mt-12">
-<a className="inline-flex items-center space-x-3 text-secondary font-bold text-lg hover:underline underline-offset-8" href="#">
-<span>@RADIANT_BAKERY ON INSTAGRAM</span>
-<span className="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
-</a>
-</div>
-</section>
-</main>
-{/*  Footer  */}
-<footer className="bg-surface-container-low w-full py-12 px-8 mt-auto">
-<div className="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto space-y-8 md:space-y-0">
-<div className="text-lg font-black text-[#2B1B3D] dark:text-white font-['Epilogue']">
-                RadiantCreator
-            </div>
-<div className="font-['Epilogue'] text-sm uppercase tracking-widest text-[#66547a] dark:text-[#e4e2df] flex flex-wrap justify-center gap-8">
-<a className="hover:text-[#EF476F] transition-colors duration-300" href="#">Privacy</a>
-<a className="hover:text-[#EF476F] transition-colors duration-300" href="#">Terms</a>
-<a className="hover:text-[#EF476F] transition-colors duration-300" href="#">API</a>
-</div>
-<div className="font-['Epilogue'] text-xs uppercase tracking-widest text-[#66547a]">
-                © 2024 RADIANT EDITOR. BUILT FOR CREATORS.
-            </div>
-</div>
-</footer>
+      {/* Stats */}
+      <div className="grid grid-cols-2 gap-4 mb-8">
+        <div className="p-5 rounded-2xl text-center" style={{ background: VC.primaryContainer }}>
+          <p className="text-3xl font-black" style={{ color: VC.onPrimaryFixed }}>{store._count.products}</p>
+          <p className="text-xs font-bold uppercase tracking-wider mt-1" style={{ color: VC.onPrimaryContainer }}>Products</p>
+        </div>
+        <div className="p-5 rounded-2xl text-center" style={{ background: VC.surfaceLow }}>
+          <p className="text-3xl font-black" style={{ color: VC.brandDark }}>{store._count.orders}</p>
+          <p className="text-xs font-bold uppercase tracking-wider mt-1" style={{ color: VC.onSurfaceVariant }}>Happy Customers</p>
+        </div>
+      </div>
 
-    </div>
+      {/* Description */}
+      {store.description && (
+        <div className="rounded-2xl p-6 mb-6" style={{ background: VC.surfaceLowest, boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
+          <h2 className="font-black text-base mb-3" style={{ color: VC.brandDark }}>Our Story</h2>
+          <p className="text-sm leading-relaxed" style={{ color: VC.onSurfaceVariant }}>{store.description}</p>
+        </div>
+      )}
+
+      {/* Social Links */}
+      {(store.instagramHandle || store.facebookUrl || store.youtubeUrl) && (
+        <div className="rounded-2xl p-6 mb-6 space-y-3" style={{ background: VC.surfaceLowest, boxShadow: "0 2px 12px rgba(0,0,0,0.06)" }}>
+          <h2 className="font-black text-base mb-4" style={{ color: VC.brandDark }}>Follow Us</h2>
+          {store.instagramHandle && (
+            <a href={`https://instagram.com/${store.instagramHandle.replace("@", "")}`}
+              target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-3 p-3 rounded-xl hover:opacity-80 transition"
+              style={{ background: "#f3f0ed" }}>
+              <span className="material-symbols-outlined" style={{ color: "#E1306C" }}>photo_camera</span>
+              <span className="font-semibold text-sm" style={{ color: VC.onBackground }}>@{store.instagramHandle.replace("@", "")}</span>
+            </a>
+          )}
+          {store.facebookUrl && (
+            <a href={store.facebookUrl} target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-3 p-3 rounded-xl hover:opacity-80 transition"
+              style={{ background: "#f3f0ed" }}>
+              <span className="material-symbols-outlined" style={{ color: "#1877F2" }}>public</span>
+              <span className="font-semibold text-sm" style={{ color: VC.onBackground }}>Facebook Page</span>
+            </a>
+          )}
+          {store.youtubeUrl && (
+            <a href={store.youtubeUrl} target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-3 p-3 rounded-xl hover:opacity-80 transition"
+              style={{ background: "#f3f0ed" }}>
+              <span className="material-symbols-outlined" style={{ color: "#FF0000" }}>play_circle</span>
+              <span className="font-semibold text-sm" style={{ color: VC.onBackground }}>YouTube Channel</span>
+            </a>
+          )}
+        </div>
+      )}
+
+      {/* CTAs */}
+      <div className="flex flex-col gap-3">
+        <Link href={`/store/${slug}`}
+          className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl font-black text-base hover:scale-[1.02] transition-transform"
+          style={{ background: VC.primaryContainer, color: VC.onPrimaryFixed }}>
+          <span className="material-symbols-outlined">storefront</span>
+          Shop Now
+        </Link>
+        {whatsappBase && (
+          <a href={`https://wa.me/${whatsappBase}`} target="_blank" rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl font-black text-base hover:opacity-90 transition"
+            style={{ background: "#25D366", color: "#fff" }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Chat on WhatsApp
+          </a>
+        )}
+        <Link href={`/store/${slug}/contact`}
+          className="flex items-center justify-center w-full py-4 rounded-2xl font-bold text-base border-2 hover:bg-black/5 transition"
+          style={{ borderColor: VC.brandDark, color: VC.brandDark }}>
+          Contact Us →
+        </Link>
+      </div>
+    </StoreShell>
   );
 }

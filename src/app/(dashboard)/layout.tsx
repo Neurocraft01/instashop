@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { DashboardSidebar } from "@/components/dashboard/DashboardSidebar";
 import { DashboardTopbar } from "@/components/dashboard/DashboardTopbar";
+import { headers } from "next/headers";
 
 export default async function DashboardLayout({
   children,
@@ -23,6 +24,7 @@ export default async function DashboardLayout({
           name: true,
           slug: true,
           plan: true,
+          planExpiresAt: true,
           onboardingDone: true,
           logoUrl: true,
           _count: {
@@ -37,9 +39,23 @@ export default async function DashboardLayout({
 
   const store = user?.stores && user.stores.length > 0 ? user.stores[0] : null;
 
-  // If no user in DB yet (webhook delay), let them through
+  // Redirect to onboarding if not done
   if (store && !store.onboardingDone) {
     redirect("/onboarding");
+  }
+
+  // Plan expiry enforcement (skip for admin, billing page, and settings/billing)
+  const headersList = await headers();
+  const pathname = headersList.get("x-pathname") ?? "";
+  const isBillingPage = pathname.includes("/billing");
+  const isAdmin = user?.role === "SUPER_ADMIN";
+
+  if (store && !isAdmin && !isBillingPage) {
+    const now = new Date();
+    const isExpired = store.planExpiresAt && store.planExpiresAt < now;
+    if (isExpired) {
+      redirect("/plan-expired");
+    }
   }
 
   const pendingOrders = store?._count?.orders ?? 0;

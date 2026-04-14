@@ -21,14 +21,14 @@ const jakarta = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "InstaShop — Turn Your Instagram Into a Real Business",
+    default: "InstaShop — Turn Your Social Media Into a Real Business",
     template: "%s | InstaShop",
   },
   description:
     "InstaShop gives Instagram sellers their own branded mini-store, order dashboard & WhatsApp automation — free to start. Built for Indian sellers.",
   keywords: ["instagram seller", "mini store", "india ecommerce", "whatsapp orders", "instashop"],
   openGraph: {
-    title: "InstaShop — The Business OS for Instagram Sellers",
+    title: "InstaShop — The Business OS for Social Media Sellers",
     description: "Stop losing orders in DMs. Get your own store, dashboard & WhatsApp automation.",
     type: "website",
     url: process.env.NEXT_PUBLIC_APP_URL,
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "InstaShop",
-    description: "Turn Your Instagram Into a Real Business",
+    description: "Turn Your Social Media Presence Into a Real Business",
   },
 };
 

@@ -30,7 +30,7 @@ export default function SignInPage() {
   };
 
   return (
-    <body className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden"
+    <main className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden"
       style={{ background: '#f9f6f3', fontFamily: 'Plus Jakarta Sans, sans-serif' }}>
       {/* Decorative blobs */}
       <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full blur-[120px] opacity-30 pointer-events-none"
@@ -39,7 +39,7 @@ export default function SignInPage() {
         style={{ background: '#ffc2c9' }} />
 
       {/* Main Container */}
-      <main className="w-full max-w-7xl mx-auto px-6 py-12 flex flex-col items-center z-10">
+      <div className="w-full max-w-7xl mx-auto px-6 py-12 flex flex-col items-center z-10">
         {/* Logo */}
         <div className="mb-12">
           <h1 className="text-3xl font-black tracking-tighter" style={{ fontFamily: 'Epilogue, sans-serif', color: '#2f2f2d' }}>
@@ -175,7 +175,7 @@ export default function SignInPage() {
           />
           <div className="absolute inset-0 mix-blend-multiply" style={{ background: 'rgba(255,194,201,0.2)' }} />
         </div>
-      </main>
+      </div>
 
       {/* Creator Floating Bar */}
       <div
@@ -194,6 +194,6 @@ export default function SignInPage() {
         <Link href="#" className="text-xs font-bold uppercase tracking-tighter" style={{ color: '#5c5b59' }}>Support</Link>
         <Link href="#" className="text-xs font-bold uppercase tracking-tighter" style={{ color: '#5c5b59' }}>Privacy</Link>
       </div>
-    </body>
+    </main>
   );
 }

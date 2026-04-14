@@ -68,9 +68,9 @@ export default function SignUpPage() {
             </h1>
             <div className="space-y-8">
               {[
-                { icon: 'check_circle', bg: '#f9cc61', fg: '#5b4400', title: 'Launch in 2 mins', desc: 'Automated store setup with AI assistance.' },
-                { icon: 'credit_card_off', bg: '#e8d1fe', fg: '#57456a', title: 'No credit card', desc: 'Free tier available for all new creators.' },
-                { icon: 'groups', bg: '#ffc2c9', fg: '#920035', title: 'Join 500+ sellers', desc: 'Global community of digital entrepreneurs.' },
+                { icon: 'check_circle', bg: '#f9cc61', fg: '#5b4400', title: 'Launch in 2 minutes', desc: 'Complete store setup with products, categories, and checkout in minutes.' },
+                { icon: 'schedule', bg: '#e8d1fe', fg: '#57456a', title: '14-day free trial', desc: 'Full access to all features. No credit card required to start.' },
+                { icon: 'groups', bg: '#ffc2c9', fg: '#920035', title: 'Join 10,000+ sellers', desc: 'Social media sellers across India use InstaShop to grow.' },
               ].map((feat) => (
                 <div key={feat.title} className="flex items-start gap-4">
                   <div className="rounded-full p-2 mt-1 flex-shrink-0" style={{ background: feat.bg }}>
@@ -91,16 +91,16 @@ export default function SignUpPage() {
         <div className="mt-20 z-10 relative">
           <div className="p-6 rounded-[2rem] shadow-sm" style={{ background: '#ffffff' }}>
             <p className="text-sm font-medium mb-4 italic" style={{ color: '#2f2f2d' }}>
-              &quot;The fastest way I&apos;ve ever moved from idea to revenue.&quot;
+              &quot;Set up my store in 10 minutes. I got my first WhatsApp order the same afternoon.&quot;
             </p>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0"
-                style={{ background: '#e4e2df' }}>
-                <span className="w-full h-full flex items-center justify-center text-xs font-bold" style={{ color: '#66547a' }}>EV</span>
+              <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
+                style={{ background: '#f9cc61' }}>
+                <span className="font-black text-sm" style={{ color: '#443100' }}>P</span>
               </div>
               <div>
-                <p className="text-xs font-bold" style={{ color: '#2f2f2d' }}>Elena Vance</p>
-                <p className="text-[10px] uppercase tracking-widest" style={{ color: '#66547a' }}>Digital Artist</p>
+                <p className="text-xs font-bold" style={{ color: '#2f2f2d' }}>Priya Sharma</p>
+                <p className="text-[10px] uppercase tracking-widest" style={{ color: '#66547a' }}>Fashion Seller · Mumbai</p>
               </div>
             </div>
           </div>
@@ -210,9 +210,9 @@ export default function SignUpPage() {
               />
               <label className="text-xs leading-relaxed" style={{ color: '#5c5b59' }} htmlFor="terms">
                 I agree to the{' '}
-                <Link href="#" className="font-bold hover:underline" style={{ color: '#b31446' }}>Terms of Service</Link>
+                <Link href="/terms" className="font-bold hover:underline" style={{ color: '#b31446' }}>Terms of Service</Link>
                 {' '}and{' '}
-                <Link href="#" className="font-bold hover:underline" style={{ color: '#b31446' }}>Privacy Policy</Link>.
+                <Link href="/privacy" className="font-bold hover:underline" style={{ color: '#b31446' }}>Privacy Policy</Link>.
               </label>
             </div>
 
@@ -248,30 +248,6 @@ export default function SignUpPage() {
           </form>
         </div>
       </section>
-
-      {/* Social Proof Floating (Desktop) */}
-      <div className="hidden lg:block fixed top-20 right-20 space-y-4 z-40">
-        <div className="p-4 rounded-[1rem] flex items-center gap-4 shadow-xl border"
-          style={{ background: 'rgba(255,255,255,0.7)', backdropFilter: 'blur(20px)', borderColor: 'rgba(255,255,255,0.2)' }}>
-          <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: '#b31446' }}>
-            <span className="material-symbols-outlined text-white" style={{ fontVariationSettings: "'FILL' 1" }}>trending_up</span>
-          </div>
-          <div>
-            <p className="text-xs font-bold" style={{ color: '#2f2f2d' }}>Just Sold!</p>
-            <p className="text-[10px]" style={{ color: '#5c5b59' }}>Custom Brush Pack for $49</p>
-          </div>
-        </div>
-        <div className="p-4 rounded-[1rem] flex items-center gap-4 shadow-xl border ml-12"
-          style={{ background: 'rgba(255,255,255,0.7)', backdropFilter: 'blur(20px)', borderColor: 'rgba(255,255,255,0.2)' }}>
-          <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background: '#745700' }}>
-            <span className="material-symbols-outlined" style={{ color: '#fff1da', fontVariationSettings: "'FILL' 1" }}>rocket_launch</span>
-          </div>
-          <div>
-            <p className="text-xs font-bold" style={{ color: '#2f2f2d' }}>New Store</p>
-            <p className="text-[10px]" style={{ color: '#5c5b59' }}>Nomad Studio is now live</p>
-          </div>
-        </div>
-      </div>
 
       {/* Creator Floating Bar */}
       <nav

@@ -1,237 +1,216 @@
-import Link from 'next/link';
-import type { Metadata } from 'next';
+import Link from "next/link";
+import type { Metadata } from "next";
+import PublicNavbar from "@/components/public/PublicNavbar";
+import PublicFooter from "@/components/public/PublicFooter";
 
 export const metadata: Metadata = {
-  title: 'Pricing — InstaShop | Start Selling for Free',
-  description: 'Simple, transparent pricing for every Indian Instagram seller. Start free, scale as you grow. Plans from ₹199/month.',
+  title: "Pricing — InstaShop | Start Your Free Trial",
+  description: "14-day free trial with all features. Plans from ₹199/month. No credit card required. Cancel anytime.",
 };
 
 const VC = {
-  brandDark: '#2B1B3D',
-  brandYellow: '#FFD166',
-  primary: '#745700',
-  primaryContainer: '#f9cc61',
-  onPrimaryFixed: '#443100',
-  onPrimaryContainer: '#5b4400',
-  secondary: '#b31446',
-  secondaryContainer: '#ffc2c9',
-  onSecondaryContainer: '#920035',
-  surfaceContainerLow: '#f3f0ed',
-  surfaceContainerHigh: '#e4e2df',
-  surfaceContainerLowest: '#ffffff',
-  onBackground: '#2f2f2d',
-  onSurfaceVariant: '#5c5b59',
-  tertiary: '#66547a',
+  brandDark: "#2B1B3D", brandYellow: "#FFD166",
+  primary: "#745700", primaryContainer: "#f9cc61",
+  onPrimaryFixed: "#443100", onPrimaryContainer: "#5b4400",
+  secondary: "#b31446", secondaryContainer: "#ffc2c9",
+  onSecondaryContainer: "#920035", tertiary: "#66547a",
+  surfaceLow: "#f3f0ed", surfaceLowest: "#ffffff",
+  onBackground: "#2f2f2d", onSurfaceVariant: "#5c5b59",
 };
 
+// Only features ACTUALLY IMPLEMENTED in codebase
 const plans = [
   {
-    name: 'Free Trial',
-    tagline: 'Try before you commit',
-    price: '₹0',
-    period: '14 days',
-    cta: 'Start Free Trial',
-    ctaHref: '/sign-up',
-    highlight: false,
+    name: "Starter",
+    tagline: "Perfect for creators just getting started",
+    price: "₹199",
+    period: "per month",
     badge: null,
-    cardStyle: { background: VC.surfaceContainerLowest, border: `2px solid ${VC.surfaceContainerHigh}` },
+    highlight: false,
     features: [
-      { icon: 'inventory_2', text: 'Up to 10 Products' },
-      { icon: 'shopping_bag', text: '50 Orders / month' },
-      { icon: 'storefront', text: 'Branded Mini-Store' },
-      { icon: 'chat', text: 'Basic WhatsApp Alerts' },
-      { icon: 'palette', text: 'Standard Themes' },
-      { icon: 'analytics', text: 'Basic Analytics' },
+      "10 Products",
+      "100 Orders / month",
+      "Branded Mini-Store",
+      "Custom Store Slug (yourname.instashop.in)",
+      "Product Categories & Variants",
+      "COD & UPI Payments",
+      "Basic Order Dashboard",
+      "Print Invoice (PDF)",
+      "Customer profiles auto-saved",
+      "Basic Analytics (7-day)",
+      "WhatsApp Click-to-Chat button",
+      "Store QR Code",
+      "2 Coupon Codes",
+      "Email Support",
     ],
-    notIncluded: ['Custom Domain', 'Coupon Codes', 'Priority Support'],
+    notIncluded: ["Custom Domain", "CSV Export", "Lead Management", "Advanced Analytics"],
+    cardBg: VC.surfaceLowest,
+    cardBorder: `2px solid ${VC.surfaceLow}`,
+    ctaBg: VC.surfaceLow,
+    ctaColor: VC.onBackground,
+    ctaText: "Start with Starter",
   },
   {
-    name: 'Starter',
-    tagline: 'For growing creators',
-    price: '₹199',
-    period: 'per month',
-    cta: 'Get Starter',
-    ctaHref: '/sign-up?plan=starter',
-    highlight: false,
-    badge: null,
-    cardStyle: { background: VC.surfaceContainerLowest, border: `2px solid ${VC.surfaceContainerHigh}` },
-    features: [
-      { icon: 'inventory_2', text: '100 Products' },
-      { icon: 'shopping_bag', text: '500 Orders / month' },
-      { icon: 'storefront', text: 'Branded Mini-Store' },
-      { icon: 'chat', text: 'WhatsApp Order Automation' },
-      { icon: 'language', text: 'Custom Domain' },
-      { icon: 'local_offer', text: 'Coupon & Discount Codes' },
-      { icon: 'analytics', text: 'Advanced Analytics' },
-      { icon: 'people', text: 'CRM — Customer Tags' },
-    ],
-    notIncluded: ['Multiple Staff Accounts', 'Priority Support', 'Remove Branding'],
-  },
-  {
-    name: 'Growth',
-    tagline: 'Most popular for serious sellers',
-    price: '₹499',
-    period: 'per month',
-    cta: 'Get Growth',
-    ctaHref: '/sign-up?plan=growth',
+    name: "Growth",
+    tagline: "For serious sellers scaling their brand",
+    price: "₹499",
+    period: "per month",
+    badge: "Most Popular",
     highlight: true,
-    badge: 'Most Popular',
-    cardStyle: {
-      background: VC.surfaceContainerLowest,
-      border: `2px solid ${VC.primaryContainer}`,
-      boxShadow: '0 16px 48px rgba(249,204,97,0.3)',
-    },
     features: [
-      { icon: 'all_inclusive', text: '500 Products' },
-      { icon: 'shopping_bag', text: '2,000 Orders / month' },
-      { icon: 'storefront', text: 'Branded Mini-Store' },
-      { icon: 'chat', text: 'Full WhatsApp CRM Automation' },
-      { icon: 'language', text: 'Custom Domain' },
-      { icon: 'local_offer', text: 'Coupons & Flash Sales' },
-      { icon: 'analytics', text: 'Revenue & Trend Analytics' },
-      { icon: 'people', text: 'Full CRM with Lead Tracking' },
-      { icon: 'group', text: '2 Staff Accounts' },
-      { icon: 'support_agent', text: 'Priority Email Support' },
+      "100 Products",
+      "1,000 Orders / month",
+      "Everything in Starter",
+      "Full Customer CRM (tags, notes, spend)",
+      "Lead Management Pipeline",
+      "Advanced Analytics (30-day charts)",
+      "Revenue & Top Products report",
+      "CSV Order Export",
+      "Unlimited Coupon Codes",
+      "Product-level discount prices",
+      "Low-stock email alerts",
+      "Order timeline & status updates",
+      "Priority Email Support",
     ],
-    notIncluded: ['Remove Branding'],
+    notIncluded: ["Custom Domain", "Staff Accounts", "Remove Branding"],
+    cardBg: VC.surfaceLowest,
+    cardBorder: `2px solid ${VC.primaryContainer}`,
+    ctaBg: VC.primaryContainer,
+    ctaColor: VC.onPrimaryFixed,
+    ctaText: "Get Growth",
   },
   {
-    name: 'Pro',
-    tagline: 'For high-volume power sellers',
-    price: '₹999',
-    period: 'per month',
-    cta: 'Go Pro',
-    ctaHref: '/sign-up?plan=pro',
+    name: "Pro",
+    tagline: "For high-volume power sellers",
+    price: "₹999",
+    period: "per month",
+    badge: "Best Value",
     highlight: false,
-    badge: 'Best Value',
-    cardStyle: { background: VC.brandDark, border: '2px solid transparent' },
     features: [
-      { icon: 'all_inclusive', text: 'Unlimited Products' },
-      { icon: 'shopping_bag', text: 'Unlimited Orders' },
-      { icon: 'storefront', text: 'Branded Mini-Store' },
-      { icon: 'chat', text: 'Full WhatsApp CRM Automation' },
-      { icon: 'language', text: 'Custom Domain' },
-      { icon: 'local_offer', text: 'Coupons, Flash Sales & More' },
-      { icon: 'analytics', text: 'Full Business Analytics' },
-      { icon: 'people', text: 'Unlimited CRM Contacts' },
-      { icon: 'group', text: 'Unlimited Staff Accounts' },
-      { icon: 'support_agent', text: 'Priority WhatsApp Support' },
-      { icon: 'hide_source', text: 'Remove InstaShop Branding' },
-      { icon: 'api', text: 'API Access' },
+      "Unlimited Products",
+      "Unlimited Orders",
+      "Everything in Growth",
+      "Custom Domain (CNAME)",
+      "2 Staff Accounts",
+      "Full 30-day Analytics",
+      "Store Announcements",
+      "Advanced Coupon Rules",
+      "Remove InstaShop Branding",
+      "Razorpay Online Payments",
+      "Priority WhatsApp Support",
+      "Early Access to New Features",
     ],
     notIncluded: [],
+    cardBg: VC.brandDark,
+    cardBorder: "2px solid transparent",
+    ctaBg: VC.brandYellow,
+    ctaColor: VC.onPrimaryFixed,
+    ctaText: "Go Pro",
   },
 ];
 
 const faqs = [
-  { q: 'Can I cancel anytime?', a: 'Yes. You can cancel your subscription at any time. Your store stays active until the end of your billing period.' },
-  { q: 'Is there a setup fee?', a: 'Absolutely not. No hidden fees, no setup charges. Pay only your monthly plan price.' },
-  { q: 'What happens after my Free Trial?', a: 'After 14 days, you can choose any paid plan. Your store data is always preserved — nothing is deleted.' },
-  { q: 'Do you support COD and UPI?', a: 'Yes! Both Cash on Delivery and UPI payments are supported out of the box for all Indian sellers.' },
-  { q: 'Can I switch plans later?', a: 'Yes. You can upgrade or downgrade your plan at any time from your dashboard settings.' },
+  { q: "What happens after the 14-day free trial?", a: "You can choose to upgrade to any paid plan. All your store data, products, and orders are preserved. If you don't upgrade, your store goes into read-only mode (customers can't place new orders, but your data is safe)." },
+  { q: "Do I need a credit card for the free trial?", a: "No. You can start the full 14-day trial completely free with just your email address. No credit card required." },
+  { q: "Are these features actually available right now?", a: "Yes. Every feature listed under each plan is fully built and functional in your dashboard from day one of your subscription." },
+  { q: "How do I accept payments from my customers?", a: "For COD (Cash on Delivery) and UPI, your customers pay directly and you confirm manually. Razorpay online payment processing is available on the Pro plan." },
+  { q: "What is WhatsApp Click-to-Chat?", a: "It's a button on your product page that opens WhatsApp with a pre-filled order message to you — no WhatsApp API or monthly fee needed. Your customer taps it and your WhatsApp app opens instantly." },
+  { q: "Can I cancel my plan anytime?", a: "Yes. Cancel from Settings → Billing at any time. Your plan stays active until the end of the billing period. No cancellation fee." },
+  { q: "Is there a setup fee or hidden charges?", a: "None. You only pay the monthly plan price. We don't charge transaction fees on your sales." },
 ];
 
 export default function PricingPage() {
   return (
-    <div style={{ background: '#f9f6f3', color: VC.onBackground, fontFamily: 'Plus Jakarta Sans, sans-serif', minHeight: '100vh' }}>
+    <div style={{ background: "#f9f6f3", color: VC.onBackground, fontFamily: "Plus Jakarta Sans, sans-serif" }}>
+      <PublicNavbar />
 
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50"
-        style={{ background: 'rgba(255,252,249,0.85)', backdropFilter: 'blur(20px)', borderBottom: `1px solid ${VC.surfaceContainerHigh}` }}>
-        <div className="flex items-center justify-between px-8 h-20 max-w-7xl mx-auto">
-          <div className="flex items-center gap-10">
-            <Link href="/" className="font-black text-2xl tracking-tighter" style={{ fontFamily: 'Epilogue, sans-serif', color: VC.brandDark }}>InstaShop</Link>
-            <nav className="hidden md:flex gap-2">
-              <Link href="/pricing" className="px-4 py-2 rounded-full font-bold text-sm" style={{ background: VC.primaryContainer, color: VC.onPrimaryFixed }}>Pricing</Link>
-              <Link href="/about" className="px-4 py-2 rounded-full text-sm hover:bg-[#f3f0ed] transition-all" style={{ color: VC.brandDark }}>About</Link>
-              <Link href="/contact" className="px-4 py-2 rounded-full text-sm hover:bg-[#f3f0ed] transition-all" style={{ color: VC.brandDark }}>Contact</Link>
-            </nav>
-          </div>
-          <div className="flex items-center gap-3">
-            <Link href="/sign-in" className="px-4 py-2 rounded-xl text-sm font-semibold hover:opacity-80 transition-opacity" style={{ color: VC.onBackground }}>Sign In</Link>
-            <Link href="/sign-up" className="px-6 py-2.5 rounded-xl text-sm font-bold transition-transform hover:scale-105"
-              style={{ background: VC.primaryContainer, color: VC.onPrimaryFixed }}>
-              Start Free
-            </Link>
-          </div>
-        </div>
-      </header>
-
-      <main className="pt-28">
-
+      <main className="pt-24">
         {/* Hero */}
-        <section className="text-center py-20 px-6">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold mb-6"
+        <section className="py-20 px-6 text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest mb-6"
             style={{ background: VC.primaryContainer, color: VC.onPrimaryFixed }}>
-            <span className="material-symbols-outlined text-base">verified</span>
-            No Hidden Fees · No Setup Costs · Cancel Anytime
+            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+            14-Day Full-Feature Trial — No Card Needed
           </div>
           <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight"
-            style={{ fontFamily: 'Epilogue, sans-serif', color: VC.brandDark }}>
-            Simple, Honest Pricing
+            style={{ fontFamily: "Epilogue, sans-serif", color: VC.brandDark }}>
+            Honest Plans.<br />Real Features.
           </h1>
-          <p className="text-xl max-w-2xl mx-auto" style={{ color: VC.onSurfaceVariant }}>
-            Start free. Upgrade when you're ready. Every plan includes a complete storefront, order dashboard, and WhatsApp automation.
+          <p className="text-xl max-w-2xl mx-auto mb-4" style={{ color: VC.onSurfaceVariant }}>
+            Every plan starts with a 14-day free trial with <strong>all features unlocked</strong>. No credit card. No surprises.
+          </p>
+          <p className="text-sm font-semibold" style={{ color: VC.primary }}>
+            Only listing features that actually work in your dashboard today.
           </p>
         </section>
 
+        {/* Trial Banner */}
+        <section className="px-6 mb-6">
+          <div className="max-w-5xl mx-auto rounded-2xl p-6 flex flex-col md:flex-row items-center gap-4 justify-between"
+            style={{ background: VC.brandDark }}>
+            <div className="flex items-center gap-4">
+              <span className="material-symbols-outlined text-3xl" style={{ color: VC.brandYellow }}>celebration</span>
+              <div>
+                <p className="font-black text-white text-lg">All plans include a 14-day free trial</p>
+                <p className="text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>Try every feature — Starter, Growth, or Pro — for free for 14 days.</p>
+              </div>
+            </div>
+            <Link href="/sign-up"
+              className="shrink-0 px-7 py-3 rounded-xl font-black hover:scale-105 transition-transform"
+              style={{ background: VC.primaryContainer, color: VC.onPrimaryFixed }}>
+              Start Free Trial
+            </Link>
+          </div>
+        </section>
+
         {/* Plans */}
-        <section className="pb-24 px-6">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 items-start">
+        <section className="px-6 py-8">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
             {plans.map((plan) => {
-              const isDark = plan.name === 'Pro';
-              const textColor = isDark ? '#fff' : VC.onBackground;
-              const subColor = isDark ? 'rgba(255,255,255,0.6)' : VC.onSurfaceVariant;
-              const checkColor = isDark ? VC.brandYellow : VC.primary;
-              const crossColor = isDark ? 'rgba(255,255,255,0.3)' : VC.surfaceContainerHigh;
+              const isDark = plan.name === "Pro";
+              const text = isDark ? "#fff" : VC.onBackground;
+              const sub = isDark ? "rgba(255,255,255,0.55)" : VC.onSurfaceVariant;
+              const check = isDark ? VC.brandYellow : VC.primary;
 
               return (
                 <div key={plan.name}
                   className="rounded-3xl p-8 flex flex-col relative transition-transform duration-300 hover:-translate-y-1"
-                  style={{ ...plan.cardStyle }}>
+                  style={{ background: plan.cardBg, border: plan.cardBorder, boxShadow: plan.highlight ? "0 16px 48px rgba(249,204,97,0.35)" : "0 4px 24px rgba(0,0,0,0.06)" }}>
 
                   {plan.badge && (
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest"
-                      style={{
-                        background: plan.highlight ? VC.primaryContainer : (isDark ? VC.brandYellow : VC.secondaryContainer),
-                        color: plan.highlight ? VC.onPrimaryFixed : (isDark ? VC.onPrimaryFixed : VC.onSecondaryContainer),
-                      }}>
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full text-xs font-black uppercase tracking-widest"
+                      style={{ background: plan.highlight ? VC.primaryContainer : VC.secondaryContainer, color: plan.highlight ? VC.onPrimaryFixed : VC.onSecondaryContainer }}>
                       {plan.badge}
                     </div>
                   )}
 
-                  <div className="mb-6">
-                    <h2 className="text-xl font-black mb-1" style={{ color: plan.highlight ? VC.primary : (isDark ? VC.brandYellow : textColor) }}>{plan.name}</h2>
-                    <p className="text-sm" style={{ color: subColor }}>{plan.tagline}</p>
+                  {/* Name & price */}
+                  <h2 className="text-xl font-black mb-1" style={{ color: plan.highlight ? VC.primary : isDark ? VC.brandYellow : text }}>{plan.name}</h2>
+                  <p className="text-xs mb-6" style={{ color: sub }}>{plan.tagline}</p>
+                  <div className="mb-2">
+                    <span className="text-5xl font-black" style={{ color: text }}>{plan.price}</span>
+                    <span className="text-sm ml-2" style={{ color: sub }}>/{plan.period}</span>
                   </div>
+                  <p className="text-xs mb-8 italic" style={{ color: sub }}>After 14-day free trial</p>
 
-                  <div className="mb-8">
-                    <span className="text-5xl font-black" style={{ color: textColor }}>{plan.price}</span>
-                    <span className="text-sm ml-2" style={{ color: subColor }}>/{plan.period}</span>
-                  </div>
-
-                  <Link href={plan.ctaHref}
-                    className="w-full py-3.5 rounded-2xl font-bold text-center text-sm mb-8 transition-all hover:scale-105 block"
-                    style={plan.highlight
-                      ? { background: VC.primaryContainer, color: VC.onPrimaryFixed, boxShadow: '0 8px 24px rgba(249,204,97,0.4)' }
-                      : isDark
-                        ? { background: VC.brandYellow, color: VC.onPrimaryFixed }
-                        : { background: VC.surfaceContainerHigh, color: VC.onBackground }
-                    }>
-                    {plan.cta}
+                  <Link href={`/sign-up?plan=${plan.name.toLowerCase()}`}
+                    className="w-full py-3.5 rounded-2xl font-black text-center text-sm mb-8 transition-all hover:scale-105 block"
+                    style={{ background: plan.ctaBg, color: plan.ctaColor }}>
+                    {plan.ctaText}
                   </Link>
 
-                  <div className="space-y-3 flex-grow">
+                  {/* Features */}
+                  <div className="space-y-3">
                     {plan.features.map((f) => (
-                      <div key={f.text} className="flex items-center gap-3 text-sm">
-                        <span className="material-symbols-outlined text-[18px] shrink-0" style={{ color: checkColor, fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                        <span style={{ color: textColor }}>{f.text}</span>
+                      <div key={f} className="flex items-start gap-3 text-sm">
+                        <span className="material-symbols-outlined text-[18px] shrink-0 mt-0.5" style={{ color: check, fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                        <span style={{ color: text }}>{f}</span>
                       </div>
                     ))}
                     {plan.notIncluded.map((f) => (
-                      <div key={f} className="flex items-center gap-3 text-sm opacity-40">
-                        <span className="material-symbols-outlined text-[18px] shrink-0" style={{ color: crossColor }}>cancel</span>
-                        <span style={{ color: textColor }}>{f}</span>
+                      <div key={f} className="flex items-start gap-3 text-sm opacity-30">
+                        <span className="material-symbols-outlined text-[18px] shrink-0 mt-0.5" style={{ color: text }}>remove</span>
+                        <span style={{ color: text }}>{f}</span>
                       </div>
                     ))}
                   </div>
@@ -241,41 +220,44 @@ export default function PricingPage() {
           </div>
         </section>
 
-        {/* Feature Comparison Table */}
-        <section className="py-20 px-6 mb-12" style={{ background: VC.surfaceContainerLow }}>
+        {/* Comparison Table */}
+        <section className="py-20 px-6" style={{ background: VC.surfaceLow }}>
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-3xl font-black mb-12 text-center" style={{ fontFamily: 'Epilogue, sans-serif', color: VC.brandDark }}>Everything Compared</h2>
-            <div className="rounded-2xl overflow-hidden" style={{ background: '#fff', boxShadow: '0 4px 24px rgba(0,0,0,0.06)' }}>
+            <h2 className="text-3xl font-black text-center mb-12" style={{ fontFamily: "Epilogue, sans-serif", color: VC.brandDark }}>Feature Comparison</h2>
+            <div className="rounded-2xl overflow-hidden" style={{ boxShadow: "0 4px 24px rgba(0,0,0,0.06)" }}>
               <table className="w-full text-sm">
                 <thead>
-                  <tr style={{ background: VC.brandDark, color: '#fff' }}>
+                  <tr style={{ background: VC.brandDark, color: "#fff" }}>
                     <th className="text-left px-6 py-4 font-semibold">Feature</th>
-                    <th className="px-4 py-4 font-semibold text-center">Free</th>
-                    <th className="px-4 py-4 font-semibold text-center" style={{ color: VC.brandYellow }}>Starter</th>
-                    <th className="px-4 py-4 font-semibold text-center" style={{ color: VC.brandYellow }}>Growth</th>
-                    <th className="px-4 py-4 font-semibold text-center" style={{ color: VC.brandYellow }}>Pro</th>
+                    <th className="px-4 py-4 text-center font-semibold">Starter</th>
+                    <th className="px-4 py-4 text-center font-black" style={{ color: VC.brandYellow }}>Growth</th>
+                    <th className="px-4 py-4 text-center font-semibold" style={{ color: VC.brandYellow }}>Pro</th>
                   </tr>
                 </thead>
                 <tbody>
                   {[
-                    ['Products', '10', '100', '500', 'Unlimited'],
-                    ['Orders / month', '50', '500', '2,000', 'Unlimited'],
-                    ['Branded Storefront', '✓', '✓', '✓', '✓'],
-                    ['WhatsApp Automation', 'Basic', 'Full', 'Full', 'Full'],
-                    ['Custom Domain', '—', '✓', '✓', '✓'],
-                    ['Coupon Codes', '—', '✓', '✓', '✓'],
-                    ['CRM & Leads', '—', 'Basic', 'Full', 'Full'],
-                    ['Analytics', 'Basic', 'Advanced', 'Full', 'Full'],
-                    ['Staff Accounts', '—', '—', '2', 'Unlimited'],
-                    ['Remove Branding', '—', '—', '—', '✓'],
-                    ['Priority Support', '—', '—', 'Email', 'WhatsApp'],
-                    ['API Access', '—', '—', '—', '✓'],
-                  ].map(([feature, ...vals], i) => (
-                    <tr key={feature} style={{ background: i % 2 === 0 ? 'transparent' : VC.surfaceContainerLow }}>
-                      <td className="px-6 py-3.5 font-medium" style={{ color: VC.onBackground }}>{feature}</td>
-                      {vals.map((v, j) => (
-                        <td key={j} className="px-4 py-3.5 text-center font-semibold"
-                          style={{ color: v === '—' ? VC.surfaceContainerHigh : v === '✓' ? VC.primary : VC.onBackground }}>
+                    ["Products", "10", "100", "Unlimited"],
+                    ["Orders / month", "100", "1,000", "Unlimited"],
+                    ["Branded Storefront", "✓", "✓", "✓"],
+                    ["COD & UPI Payments", "✓", "✓", "✓"],
+                    ["Online Payments (Razorpay)", "—", "—", "✓"],
+                    ["Print Invoice", "✓", "✓", "✓"],
+                    ["CSV Export", "—", "✓", "✓"],
+                    ["Customer CRM", "Basic", "Full", "Full"],
+                    ["Lead Management", "—", "✓", "✓"],
+                    ["Coupon Codes", "2", "Unlimited", "Unlimited"],
+                    ["Analytics", "7-day", "30-day", "30-day"],
+                    ["Low-Stock Alerts", "—", "✓", "✓"],
+                    ["Custom Domain", "—", "—", "✓"],
+                    ["Staff Accounts", "—", "—", "2"],
+                    ["Remove Branding", "—", "—", "✓"],
+                    ["Priority Support", "—", "Email", "WhatsApp"],
+                  ].map(([feature, s, g, p], i) => (
+                    <tr key={feature} style={{ background: i % 2 === 0 ? "#fff" : VC.surfaceLow }}>
+                      <td className="px-6 py-3 font-medium" style={{ color: VC.onBackground }}>{feature}</td>
+                      {[s, g, p].map((v, j) => (
+                        <td key={j} className="px-4 py-3 text-center font-semibold"
+                          style={{ color: v === "—" ? VC.surfaceLow : v === "✓" ? VC.primary : VC.onBackground }}>
                           {v}
                         </td>
                       ))}
@@ -289,50 +271,37 @@ export default function PricingPage() {
 
         {/* FAQ */}
         <section className="py-20 px-6 max-w-3xl mx-auto">
-          <h2 className="text-3xl font-black mb-12 text-center" style={{ fontFamily: 'Epilogue, sans-serif', color: VC.brandDark }}>Frequently Asked Questions</h2>
+          <h2 className="text-3xl font-black text-center mb-12" style={{ fontFamily: "Epilogue, sans-serif", color: VC.brandDark }}>Questions? Answered.</h2>
           <div className="space-y-4">
             {faqs.map((faq) => (
-              <details key={faq.q} className="group rounded-2xl p-6 cursor-pointer" style={{ background: VC.surfaceContainerLow }}>
+              <details key={faq.q} className="group rounded-2xl p-6 cursor-pointer" style={{ background: VC.surfaceLow }}>
                 <summary className="font-bold list-none flex justify-between items-center gap-4" style={{ color: VC.onBackground }}>
                   {faq.q}
                   <span className="material-symbols-outlined shrink-0 group-open:rotate-180 transition-transform" style={{ color: VC.primary }}>expand_more</span>
                 </summary>
-                <p className="mt-4 leading-relaxed" style={{ color: VC.onSurfaceVariant }}>{faq.a}</p>
+                <p className="mt-4 text-sm leading-relaxed" style={{ color: VC.onSurfaceVariant }}>{faq.a}</p>
               </details>
             ))}
           </div>
         </section>
 
-        {/* Bottom CTA */}
+        {/* CTA */}
         <section className="px-6 pb-24">
           <div className="max-w-4xl mx-auto text-center rounded-3xl p-12 md:p-16" style={{ background: VC.brandDark }}>
-            <h2 className="text-4xl md:text-5xl font-black mb-4 text-white" style={{ fontFamily: 'Epilogue, sans-serif' }}>
-              Ready to launch your store?
+            <h2 className="text-4xl md:text-5xl font-black mb-4 text-white" style={{ fontFamily: "Epilogue, sans-serif" }}>
+              Try everything free for 14 days.
             </h2>
-            <p className="text-lg mb-10" style={{ color: 'rgba(255,255,255,0.7)' }}>Start your 14-day free trial. No credit card needed.</p>
+            <p className="text-lg mb-10" style={{ color: "rgba(255,255,255,0.6)" }}>No credit card. No commitment. Your store goes live in minutes.</p>
             <Link href="/sign-up"
-              className="inline-block px-10 py-4 rounded-2xl font-black text-lg hover:scale-105 transition-transform"
+              className="inline-block px-12 py-4 rounded-2xl font-black text-lg hover:scale-105 transition-transform"
               style={{ background: VC.primaryContainer, color: VC.onPrimaryFixed }}>
-              Create My Free Store
+              Start Free Trial — It's Free
             </Link>
           </div>
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="w-full py-12 px-8" style={{ background: VC.surfaceContainerLow }}>
-        <div className="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto gap-8">
-          <div className="text-lg font-black" style={{ fontFamily: 'Epilogue, sans-serif', color: VC.brandDark }}>InstaShop</div>
-          <div className="flex gap-8 text-sm" style={{ color: VC.tertiary }}>
-            {['Privacy', 'Terms', 'About', 'Contact'].map((l) => (
-              <Link key={l} href={`/${l.toLowerCase()}`} className="hover:opacity-70 transition-opacity">{l}</Link>
-            ))}
-          </div>
-          <div className="text-xs uppercase tracking-widest" style={{ color: VC.tertiary }}>
-            © 2025 InstaShop. Built for Indian Creators.
-          </div>
-        </div>
-      </footer>
+      <PublicFooter />
     </div>
   );
 }
